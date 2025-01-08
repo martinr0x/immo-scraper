@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "immo-scraper"
+version = "0.1.0"
+description = ""
+authors = ["Martin Bogusz <martin.bogusz@hotmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+ruff = "^0.8.6"
+playwright = "^1.49.1"
+playwright-stealth = "^1.0.6"
+asyncio = "^3.4.3"
+setuptools = "^75.7.0"
+python-telegram-bot = {extras = ["job-queue"], version = "^21.10"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
