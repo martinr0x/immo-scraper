@@ -45,8 +45,9 @@ async def get_listings(context: ContextTypes.DEFAULT_TYPE) -> None:
     job = context.job
     gmt_plus_1 = timezone(timedelta(hours=1))
     last_scraped = datetime.now(gmt_plus_1).isoformat()
-    print (last_scraped)
+    logger.info(f"Starting scraping {last_scraped}")
     async def post_listing(listings: List[Listing]):
+        logger.info (f"Found that many listings {len(listings)}")
         for listing in filter(get_current_filter(job.data).match, listings):
             await context.bot.send_message(job.chat_id, text=listing.to_text())
 
@@ -78,10 +79,10 @@ async def set_scraper(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
             )
             return
 
-        interval *= 60
+        # interval *= 60
 
         job_removed = remove_job_if_exists(str(chat_id), context)
-        context.job_queue.run_repeating(
+        context.job_queue.run_once(
             get_listings, interval, chat_id=chat_id, name=str(chat_id), data=get_last_scrape_time()
         )
 
